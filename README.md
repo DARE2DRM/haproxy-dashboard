@@ -1,10 +1,10 @@
-![Contributors](https://img.shields.io/github/contributors/alonz22/HAProxy-Configurator.svg)
-![GitHub Stars](https://img.shields.io/github/stars/alonz22/HAProxy-Configurator.svg?style=social)
-![GitHub Forks](https://img.shields.io/github/forks/alonz22/HAProxy-Configurator.svg?style=social)
-![Downloads](https://img.shields.io/github/downloads/alonz22/HAProxy-Configurator/total.svg)
-![Last Commit](https://img.shields.io/github/last-commit/alonz22/HAProxy-Configurator.svg)
-![Issues](https://img.shields.io/github/issues/alonz22/HAProxy-Configurator.svg)
-![Pull Requests](https://img.shields.io/github/issues-pr/alonz22/HAProxy-Configurator.svg)
+![Contributors](https://img.shields.io/github/contributors/DARE2DRM/HAProxy-Configurator.svg)
+![GitHub Stars](https://img.shields.io/github/stars/DARE2DRM/HAProxy-Configurator.svg?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/DARE2DRM/HAProxy-Configurator.svg?style=social)
+![Downloads](https://img.shields.io/github/downloads/DARE2DRM/HAProxy-Configurator/total.svg)
+![Last Commit](https://img.shields.io/github/last-commit/DARE2DRM/HAProxy-Configurator.svg)
+![Issues](https://img.shields.io/github/issues/DARE2DRM/HAProxy-Configurator.svg)
+![Pull Requests](https://img.shields.io/github/issues-prDARE2DRM/HAProxy-Configurator.svg)
 
 
 
@@ -41,7 +41,7 @@ Before using the HAProxy Configurator, ensure that your system meets the followi
 ## Install:
 
 1. clone the repository:
-   ```git clone https://github.com/alonz22/HAProxy-Configurator```
+   ```git clone https://github.com/DARE2DRM/HAProxy-Configurator```
 
 2. Install pip (if not installed already):
 
