@@ -51,12 +51,12 @@ Before using the HAProxy Configurator, ensure that your system meets the followi
 - RedHat:
   ```yum install python3-pip```
 
-3. Install flask and the app dependencies by simply run the Makefile in the cli:
-   ```make install```
-   
-4. enter the root folder of the app:
-   ```cd haproxy-configurator```
+3. enter the root folder of the app:
+   ```cd haproxy-dashboard```  
 
+4. Install flask and the app dependencies by simply run the Makefile in the cli:
+   ```pip install -r requirements.txt```
+   
 5. run the installation script:
    ```chmod +x install.sh```
 if the script failes to run with "bad interpreter" error, run the following:
