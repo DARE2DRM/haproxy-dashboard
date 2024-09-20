@@ -25,9 +25,9 @@ WORKDIR /etc/haproxy-configurator
 
 # Create the haproxy directory and config file \
 RUN mkdir -p /etc/hapee-2.6 && \
-    touch /etc/hapee-2.6/haproxy.cfg && \
+    touch /etc/hapee-2.6/hapee-lb.cfg && \
     # Give the permission to haproxy \
-    chmod g=u /etc/hapee-2.6/haproxy.cfg
+    chmod g=u /etc/hapee-2.6/hapee-lb.cfg
 
 
 # Switch to user
