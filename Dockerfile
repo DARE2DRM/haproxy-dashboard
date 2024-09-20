@@ -5,7 +5,7 @@ RUN echo "Update system and install dependencies" && \
     # update the system \
     apt-get update && \
     # install packages \
-    apt-get install -y --no-install-recommends python3-pip haproxy && \
+    apt-get install -y --no-install-recommends python3-pip && \
     # clean the package cache \
     apt-get clean && \
     # clean cache \
