@@ -19,8 +19,8 @@ ARG USER_UID=1001
 RUN useradd --uid $USER_UID --gid 0 -m $USERNAME
 
 # Use build --no-cache if change it
-COPY --chown=$USERNAME:0 . /etc/hapee-2.6-configurator
-WORKDIR /etc/hapee-2.6-configurator
+COPY --chown=$USERNAME:0 . /etc/haproxy-configurator
+WORKDIR /etc/haproxy-configurator
 
 
 # Create the haproxy directory and config file \
@@ -38,4 +38,4 @@ RUN python -m pip install -r requirements.txt
 
 EXPOSE 5000
 
-CMD [ "python", "/etc/hapee-2.6-configurator/app.py" ]
+CMD [ "python", "/etc/haproxy-configurator/app.py" ]
