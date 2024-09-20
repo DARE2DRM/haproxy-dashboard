@@ -6,7 +6,7 @@ RUN echo "Update system and install dependencies" && \
     # update the system \
     apt-get update && \
     # install packages \
-    apt-get install -y --no-install-recommends python3-pip haproxy && \
+    apt-get install -y --no-install-recommends python3-pip && \
     # clean the package cache \
     apt-get clean && \
     # clean cache \
@@ -24,11 +24,8 @@ COPY --chown=$USERNAME:0 . /etc/haproxy-configurator
 WORKDIR /etc/haproxy-configurator
 
 
-# Create the haproxy directory and config file \
-RUN mkdir -p /etc/haproxy && \
-    touch /etc/haproxy/haproxy.cfg && \
-    # Give the permission to haproxy \
-    chmod g=u /etc/haproxy/haproxy.cfg
+# Give the permission to haproxy \
+ Run chmod g=u /etc/happe-2.6/haproxy.cfg
 
 
 # Switch to user
