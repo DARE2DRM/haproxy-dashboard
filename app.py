@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 def is_frontend_exist(frontend_name, frontend_ip, frontend_port):
-    with open('/etc/hapee-2.6/haproxy.cfg', 'r') as haproxy_cfg:
+    with open('/etc/hapee-2.6/hapee-lb.cfg', 'r') as haproxy_cfg:
         frontend_found = False
         for line in haproxy_cfg:
             if line.strip().startswith('frontend'):
@@ -31,7 +31,7 @@ def is_frontend_exist(frontend_name, frontend_ip, frontend_port):
 
 
 def is_backend_exist(backend_name):
-    with open('/etc/hapee-2.6/haproxy.cfg', 'r') as haproxy_cfg:
+    with open('/etc/hapee-2.6/hapee-lb.cfg', 'r') as haproxy_cfg:
         backend_found = False
         for line in haproxy_cfg:
             if line.strip().startswith('backend'):
@@ -50,7 +50,7 @@ def update_haproxy_config(frontend_name, frontend_ip, frontend_port, lb_method, 
     if is_backend_exist(backend_name):
             return f"Backend {backend_name} already exists. Cannot add duplicate."
     
-    with open('/etc/hapee-2.6/haproxy.cfg', 'a') as haproxy_cfg:
+    with open('/etc/hapee-2.6/hapee-lb.cfg', 'a') as haproxy_cfg:
         haproxy_cfg.write(f"\nfrontend {frontend_name}\n")
         if is_frontend_exist(frontend_name, frontend_ip, frontend_port):
             return "Frontend or Port already exists. Cannot add duplicate."
@@ -108,7 +108,7 @@ def update_haproxy_config(frontend_name, frontend_ip, frontend_port, lb_method, 
             
         haproxy_cfg.write(f"    default_backend {backend_name}\n")
 
-    with open('/etc/hapee-2.6/haproxy.cfg', 'a') as haproxy_cfg:
+    with open('/etc/hapee-2.6/hapee-lb.cfg', 'a') as haproxy_cfg:
         haproxy_cfg.write(f"\nbackend {backend_name}\n")
         
         if sticky_session and sticky_session_type == 'cookie':
@@ -232,12 +232,12 @@ def edit_haproxy_config():
     if request.method == 'POST':
         edited_config = request.form['haproxy_config']
         # Save the edited config to the haproxy.cfg file
-        with open('/etc/hapee-2.6/haproxy.cfg', 'w') as f:
+        with open('/etc/hapee-2.6/hapee-lb.cfg', 'w') as f:
             f.write(edited_config)
 
         if 'save_check' in request.form:
             # Run haproxy -c -V -f to check the configuration
-            check_result = subprocess.run(['haproxy', '-c', '-V', '-f', '/etc/hapee-2.6/haproxy.cfg'], capture_output=True, text=True)
+            check_result = subprocess.run(['haproxy', '-c', '-V', '-f', '/etc/hapee-2.6/hapee-lb.cfg'], capture_output=True, text=True)
             check_output = check_result.stdout
 
             # Check if there was an error, and if so, append it to the output
@@ -247,7 +247,7 @@ def edit_haproxy_config():
 
         elif 'save_reload' in request.form:
             # Run haproxy -c -V -f to check the configuration
-            check_result = subprocess.run(['haproxy', '-c', '-V', '-f', '/etc/hapee-2.6/haproxy.cfg'], capture_output=True, text=True)
+            check_result = subprocess.run(['haproxy', '-c', '-V', '-f', '/etc/hapee-2.6/hapee-lb.cfg'], capture_output=True, text=True)
             check_output = check_result.stdout
 
             # Check if there was an error, and if so, append it to the output
@@ -256,14 +256,14 @@ def edit_haproxy_config():
                 check_output += f"\n\nError occurred:\n{error_message}"
             else:
                 # If no error, run haproxy -D -f to reload HAProxy
-                #reload_result = subprocess.run(['haproxy', '-D', '-f', '/etc/hapee-2.6/haproxy.cfg'], capture_output=True, text=True)
-                reload_result = subprocess.run(['systemctl', 'restart', 'haproxy', '/etc/hapee-2.6/haproxy.cfg'], capture_output=True, text=True)
+                #reload_result = subprocess.run(['haproxy', '-D', '-f', '/etc/hapee-2.6/hapee-lb.cfg'], capture_output=True, text=True)
+                reload_result = subprocess.run(['systemctl', 'restart', 'haproxy', '/etc/hapee-2.6/hapee-lb.cfg'], capture_output=True, text=True)
                 check_output += f"\n\nHAProxy Restart Output:\n{reload_result.stdout}"
 
         return render_template('edit.html', config_content=edited_config, check_output=check_output)
 
     # Read the current contents of haproxy.cfg
-    with open('/etc/hapee-2.6/haproxy.cfg', 'r') as f:
+    with open('/etc/hapee-2.6/hapee-lb.cfg', 'r') as f:
         config_content = f.read()
 
     return render_template('edit.html', config_content=config_content)
@@ -275,7 +275,7 @@ def count_frontends_and_backends():
     layer7_count = 0
     layer4_count = 0
     
-    with open('/etc/hapee-2.6/haproxy.cfg', 'r') as haproxy_cfg:
+    with open('/etc/hapee-2.6/hapee-lb.cfg', 'r') as haproxy_cfg:
         lines = haproxy_cfg.readlines()
 
         for line in lines:
