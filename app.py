@@ -73,11 +73,11 @@ def update_haproxy_config(frontend_name, frontend_ip, frontend_port, lb_method, 
             haproxy_cfg.write(f"    acl is_sql_injection urlp_reg -i (union|select|insert|update|delete|drop|@@|1=1|`1)\n")
             haproxy_cfg.write(f"    acl is_long_uri path_len gt 400\n")
             haproxy_cfg.write(f"    acl semicolon_path path_reg -i ^.*;.*\n")
-            haproxy_cfg.write(f"    acl is_sql_injection2 urlp_reg -i (;|substring|extract|union\s+all|order\s+by)\s+(\d+|--\+)\n")
+            haproxy_cfg.write(r"    acl is_sql_injection2 urlp_reg -i (;|substring|extract|union\s+all|order\s+by)\s+(\d+|--\+)\n")
             haproxy_cfg.write(f"    http-request deny if is_sql_injection or is_long_uri or semicolon_path or is_sql_injection2\n")
         if is_xss:
             haproxy_cfg.write(f"    acl is_xss_attack urlp_reg -i (<|>|script|alert|onerror|onload|javascript)\n")
-            haproxy_cfg.write(f"    acl is_xss_attack_2 urlp_reg -i (<\s*script\s*|javascript:|<\s*img\s*src\s*=|<\s*a\s*href\s*=|<\s*iframe\s*src\s*=|\bon\w+\s*=|<\s*input\s*[^>]*\s*value\s*=|<\s*form\s*action\s*=|<\s*svg\s*on\w+\s*=)\n")
+            haproxy_cfg.write(r"    acl is_xss_attack_2 urlp_reg -i (<\s*script\s*|javascript:|<\s*img\s*src\s*=|<\s*a\s*href\s*=|<\s*iframe\s*src\s*=|\bon\w+\s*=|<\s*input\s*[^>]*\s*value\s*=|<\s*form\s*action\s*=|<\s*svg\s*on\w+\s*=)\n")
             haproxy_cfg.write(f"    acl is_xss_attack_hdr hdr_reg(Cookie|Referer|User-Agent) -i (<|>|script|alert|onerror|onload|javascript)\n")
             haproxy_cfg.write("     acl is_xss_cookie hdr_beg(Cookie) -i \"<script\" \"javascript:\" \"on\" \"alert(\" \"iframe\" \"onload\" \"onerror\" \"onclick\" \"onmouseover\"\n")
 
@@ -102,7 +102,7 @@ def update_haproxy_config(frontend_name, frontend_ip, frontend_port, lb_method, 
             haproxy_cfg.write(f"    option http-buffer-request\n")
             haproxy_cfg.write(f"    acl is_webshell urlp_reg(payload,eval|system|passthru|shell_exec|exec|popen|proc_open|pcntl_exec)\n")
             haproxy_cfg.write(f"    acl is_potential_webshell urlp_reg(payload,php|jsp|asp|aspx)\n")
-            haproxy_cfg.write(f"    acl blocked_webshell path_reg -i /(cmd|shell|backdoor|webshell|phpspy|c99|kacak|b374k|log4j|log4shell|wsos|madspot|malicious|evil).*\.php.*\n")
+            haproxy_cfg.write(r"    acl blocked_webshell path_reg -i /(cmd|shell|backdoor|webshell|phpspy|c99|kacak|b374k|log4j|log4shell|wsos|madspot|malicious|evil).*\.php.*\n")
             haproxy_cfg.write(f"    acl is_suspicious_post hdr(Content-Type) -i application/x-www-form-urlencoded multipart/form-data\n")
             haproxy_cfg.write(f"    http-request deny if blocked_webshell or is_webshell or is_potential_webshell or is_suspicious_post \n")
             
