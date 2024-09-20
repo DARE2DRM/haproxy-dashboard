@@ -41,7 +41,7 @@ Before using the HAProxy Configurator, ensure that your system meets the followi
 ## Install:
 
 1. clone the repository:
-   ```git clone https://github.com/DARE2DRM/HAProxy-Configurator```
+   ```git clone https://github.com/DARE2DRM/haproxy-dashboard```
 
 2. Install pip (if not installed already):
 
